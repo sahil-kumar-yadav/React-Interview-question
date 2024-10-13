@@ -351,3 +351,134 @@ Certainly! Here are some popular and frequently asked questions about React perf
 
 ### 100. **How does React's learning curve compare to other frameworks?**
    React has a moderate learning curve, primarily due to its component-based architecture and JSX syntax. While some find it easier to grasp than Angular's complexity, others may find Vue.js simpler to start with.
+
+# bonus questions:
+
+### 1. **What is hoisting in JavaScript?**
+   Hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their containing scope during the compilation phase. This means you can use variables and functions before they are declared in the code.
+
+### 2. **How does it work?**
+   During hoisting, only the declarations are hoisted, not the initializations. For example:
+   ```javascript
+   console.log(myVar); // undefined
+   var myVar = 5;
+   ```
+   Here, `myVar` is hoisted but not initialized, leading to `undefined`.
+
+### 3. **What is the difference between `let` and `var`?**
+   - **Scope:** `var` is function-scoped, while `let` is block-scoped.
+   - **Hoisting:** `var` declarations are hoisted and initialized to `undefined`, while `let` declarations are hoisted but not initialized, leading to a "temporal dead zone" until they are declared.
+
+### 4. **What is the Event Loop?**
+   The Event Loop is a mechanism that allows JavaScript to perform non-blocking I/O operations despite being single-threaded. It continuously checks the call stack and the message queue, executing tasks as the call stack becomes empty.
+
+### 5. **What is precedence in the Event Loop?**
+   Precedence in the Event Loop refers to the order in which the event loop processes tasks. It processes all synchronous code first (in the call stack) before moving on to the asynchronous tasks in the message queue, ensuring that microtasks (like promises) are processed before macrotasks (like setTimeout).
+
+### 6. **What is the difference between `setTimeout` and `setInterval`?**
+   - **setTimeout:** Executes a function after a specified delay once.
+   - **setInterval:** Repeatedly executes a function at specified intervals until cleared.
+
+### 7. **Where do you use the Rest Operator?**
+   The Rest Operator (`...`) is used to collect multiple elements into a single array. It can be used in function parameters to gather remaining arguments:
+   ```javascript
+   function sum(...args) {
+       return args.reduce((acc, curr) => acc + curr, 0);
+   }
+   ```
+
+### 8. **Have you heard of `array.reverse`?**
+   Yes, `array.reverse()` is a built-in method in JavaScript that reverses the elements of an array in place and returns the reversed array.
+
+### 9. **What is meant by Shallow copy and Deep copy?**
+   - **Shallow Copy:** Creates a new object, but nested objects are still referenced. Changes in nested objects affect both the original and copied objects.
+   - **Deep Copy:** Creates a new object and recursively copies all nested objects, ensuring that changes do not affect the original.
+
+### 10. **What are Closures?**
+   A closure is a function that retains access to its lexical scope even when the function is executed outside that scope. It allows for data encapsulation and privacy.
+
+### 11. **Have you used the `reduce` function in JavaScript?**
+   Yes, the `reduce` function is used to iterate over an array, accumulating a single value based on a callback function:
+   ```javascript
+   const sum = [1, 2, 3].reduce((acc, curr) => acc + curr, 0); // 6
+   ```
+
+### 12. **What is the difference between `map` and `reduce`?**
+   - **map:** Transforms each element of an array and returns a new array of the same length.
+   - **reduce:** Accumulates a single value from an array by applying a function across all elements.
+
+### 13. **What parameters does the `map` function accept?**
+   The `map` function accepts a callback function and an optional `thisArg`. The callback receives three parameters: the current element, the index, and the original array.
+
+### 14. **What is the difference between a Promise and a Callback?**
+   - **Promise:** Represents an asynchronous operation that can complete in the future, allowing chaining with `.then()` and `.catch()`.
+   - **Callback:** A function passed as an argument to another function, which can lead to callback hell if not managed properly.
+
+### 15. **What position attributes in CSS have you used?**
+   The position attributes include `static`, `relative`, `absolute`, `fixed`, and `sticky`.
+
+### 16. **What is the difference between them?**
+   - **static:** Default positioning; elements are positioned according to the normal flow.
+   - **relative:** Positioned relative to its normal position.
+   - **absolute:** Positioned relative to the nearest positioned ancestor (not static).
+   - **fixed:** Positioned relative to the viewport; remains fixed during scrolling.
+   - **sticky:** Switches between relative and fixed based on the scroll position.
+
+### 17. **What is Flexbox?**
+   Flexbox is a CSS layout module that allows for the design of complex layouts with ease. It provides a more efficient way to lay out, align, and distribute space among items in a container, even when their size is unknown.
+
+### 18. **What is the difference between `display: none` and `visibility: hidden`?**
+   - **display: none:** The element is removed from the document flow, and it does not take up space.
+   - **visibility: hidden:** The element is not visible but still takes up space in the document flow.
+
+### 19. **What Hooks have you used?**
+   Commonly used hooks include `useState`, `useEffect`, `useContext`, `useReducer`, `useRef`, and `useMemo`.
+
+### 20. **What is the purpose of `useCallback`?**
+   `useCallback` is a hook that returns a memoized version of a callback function, helping to optimize performance by preventing unnecessary re-creations of functions on re-renders.
+
+### 21. **What are Class-based Lifecycle methods?**
+   Class-based lifecycle methods are special methods in React that allow you to hook into specific moments of a component's lifecycle, including `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+
+### 22. **How can you achieve `componentDidMount`, `componentDidUpdate`, and `componentDidUnmount` in a functional component?**
+   These can be achieved using the `useEffect` hook:
+   ```javascript
+   useEffect(() => {
+       // componentDidMount
+       return () => {
+           // componentDidUnmount
+       };
+   }, []); // Runs once
+
+   useEffect(() => {
+       // componentDidUpdate
+   }, [dependencies]); // Runs on dependency change
+   ```
+
+### 23. **What are Pure Components and their purpose?**
+   Pure Components are components that implement `shouldComponentUpdate` with a shallow prop and state comparison. They help optimize performance by preventing unnecessary re-renders.
+
+### 24. **What are Higher Order Components (HOCs)?**
+   HOCs are functions that take a component and return a new component, enabling the reuse of component logic. They are often used for cross-cutting concerns like authentication, logging, or data fetching.
+
+### 25. **What HOCs have you used?**
+   Common HOCs include `withRouter` (from React Router), `connect` (from Redux), and custom HOCs for logging or data fetching.
+
+### 26. **Have you used the Context API?**
+   Yes, the Context API is used for managing global state and avoiding prop drilling. It provides a way to share values between components without passing props explicitly.
+
+### 27. **You already have state management in React, so why go for Redux?**
+   Redux provides a centralized store for managing state, making it easier to handle complex state logic, share state across components, and enable features like time-travel debugging and middleware.
+
+### 28. **How does Redux work?**
+   Redux follows a unidirectional data flow where:
+   - Actions are dispatched to modify the state.
+   - Reducers handle these actions and return the new state.
+   - The store holds the application state, which components can subscribe to.
+
+### 29. **Have you used any Middlewares?**
+   Yes, commonly used middlewares include `redux-thunk` for handling asynchronous actions and `redux-saga` for managing side effects.
+
+### 30. **What is the purpose of using middlewares?**
+   Middlewares in Redux allow you to intercept actions before they reach the reducer. They are useful for logging, handling asynchronous actions, and modifying actions or the dispatch process.
+
