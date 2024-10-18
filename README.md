@@ -206,33 +206,161 @@ function UncontrolledInput() {
 ### 17. **What is the purpose of `React.memo`?**
    `React.memo` is a higher-order component that optimizes functional components by memoizing the rendered output. It prevents unnecessary re-renders when props haven’t changed.
 
-### 18. **What is the difference between `useMemo` and `useCallback`?**
-   - **useMemo:** Returns a memoized value. It’s used to optimize expensive calculations.
-   - **useCallback:** Returns a memoized function. It’s used to optimize performance by preventing the creation of new function instances on every render.
 
+### 18. What is the difference between `useMemo` and `useCallback`?
+- **useMemo:** This hook returns a memoized value, allowing you to optimize performance by memoizing expensive calculations and avoiding recalculations on every render.
+- **useCallback:** This hook returns a memoized function, which prevents new function instances from being created on every render, thus optimizing performance in child components that depend on that function.
+
+**Example:**
+```javascript
+import React, { useState, useMemo, useCallback } from 'react';
+
+function ExpensiveCalculationComponent({ number }) {
+    const expensiveValue = useMemo(() => {
+        // Simulate an expensive calculation
+        return number * 2;
+    }, [number]);
+
+    const logValue = useCallback(() => {
+        console.log(expensiveValue);
+    }, [expensiveValue]);
+
+    return (
+        <div>
+            <p>Expensive Value: {expensiveValue}</p>
+            <button onClick={logValue}>Log Value</button>
+        </div>
+    );
+}
+```
 ### 19. **What are error boundaries?**
    Error boundaries are React components that catch JavaScript errors in their child component tree, log those errors, and display a fallback UI instead of crashing the whole application.
 
 ### 20. **What is the use of `key` in React lists?**
    The `key` prop is used to uniquely identify elements in a list. It helps React optimize rendering by allowing it to determine which items have changed, been added, or removed.
 
-Absolutely! Here are some additional React interview questions to further enhance your README:
+### 21. What is the difference between a class component and a functional component?
+- **Class Component:** This is created using ES6 classes. Class components can manage their own state and lifecycle methods, which allows for more complex logic.
+- **Functional Component:** This is created using functions. With the introduction of hooks, functional components can now manage state and side effects, making them a more concise option for most use cases.
 
-### 21. **What is the difference between a class component and a functional component?**
-   - **Class Component:** A traditional way to create components using ES6 classes. It can manage state and lifecycle methods.
-   - **Functional Component:** A simpler way to create components using functions. With the introduction of hooks, functional components can now manage state and side effects.
+**Example:**
+```javascript
+// Class Component
+import React, { Component } from 'react';
+
+class ClassCounter extends Component {
+    state = { count: 0 };
+
+    increment = () => {
+        this.setState({ count: this.state.count + 1 });
+    };
+
+    render() {
+        return (
+            <div>
+                <p>Count: {this.state.count}</p>
+                <button onClick={this.increment}>Increment</button>
+            </div>
+        );
+    }
+}
+
+// Functional Component
+import React, { useState } from 'react';
+
+function FunctionalCounter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+}
+```
 
 ### 22. **What are fragments in React?**
    Fragments allow you to group multiple elements without adding extra nodes to the DOM. They can be used with `<React.Fragment>` or the shorthand syntax `<>...</>`.
+### 23. What is the purpose of `useReducer`?
+**Explanation:** `useReducer` is a hook that helps manage complex state logic in functional components. It allows you to define state transitions based on actions, similar to how Redux works but without needing an external library.
 
-### 23. **What is the purpose of `useReducer`?**
-   `useReducer` is a hook that helps manage complex state logic in functional components. It is similar to Redux but built into React. It’s useful for managing state transitions based on actions.
+**Example:**
+```javascript
+import React, { useReducer } from 'react';
 
-### 24. **What are default props in React?**
-   Default props are values that are set for props if no value is provided. They can be defined using the `defaultProps` property on the component.
+const initialState = { count: 0 };
 
-### 25. **What is prop drilling?**
-   Prop drilling refers to the process of passing data from a higher-level component down to deeply nested child components through props, which can lead to cumbersome code.
+function reducer(state, action) {
+    switch (action.type) {
+        case 'increment':
+            return { count: state.count + 1 };
+        case 'decrement':
+            return { count: state.count - 1 };
+        default:
+            throw new Error();
+    }
+}
+
+function Counter() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <div>
+            <p>Count: {state.count}</p>
+            <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+            <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+        </div>
+    );
+}
+```
+
+### 24. What are default props in React?
+**Explanation:** Default props are predefined values for props that are used if no value is provided by the parent component. They help ensure that components have a default state.
+
+**Example:**
+```javascript
+import React from 'react';
+
+function Greeting({ name }) {
+    return <h1>Hello, {name}!</h1>;
+}
+
+Greeting.defaultProps = {
+    name: 'Guest',
+};
+
+// Usage
+<Greeting />; // Renders: Hello, Guest!
+<Greeting name="Alice" />; // Renders: Hello, Alice!
+```
+
+### 25. What is prop drilling?
+**Explanation:** Prop drilling is the process of passing data from a parent component down through multiple layers of child components via props. This can lead to cumbersome and difficult-to-maintain code, especially in deeply nested structures.
+
+**Example:**
+```javascript
+import React from 'react';
+
+function Grandparent() {
+    const user = { name: 'Alice' };
+
+    return <Parent user={user} />;
+}
+
+function Parent({ user }) {
+    return <Child user={user} />;
+}
+
+function Child({ user }) {
+    return <p>User: {user.name}</p>;
+}
+
+// Usage
+<Grandparent />; // Renders: User: Alice
+```
+
+In this example, `user` is passed through multiple layers, which is what is referred to as prop drilling. 
 
 ### 26. **What is the significance of keys in React?**
    Keys help React identify which items in a list have changed, been added, or removed. They should be unique and stable to help maintain component state correctly.
