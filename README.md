@@ -1,5 +1,6 @@
-# React-Interview-question
+# React Interview Questions & Answers
 
+> Click ⭐if you like the project. Pull Request are highly appreciated. Follow me [@sahil-kumar-yadav](https://www.linkedin.com/in/sahil-kumar-yadav/) for technical updates.
 
 ### 1. **What is React?**
    React is a JavaScript library for building user interfaces, developed by Facebook. It allows developers to create reusable UI components that manage their own state.
