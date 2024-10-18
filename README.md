@@ -27,24 +27,171 @@
 ### 8. **What is the virtual DOM?**
    The virtual DOM is a lightweight copy of the actual DOM. React uses it to optimize updates by determining which parts of the DOM need to be changed, reducing direct manipulation and improving performance.
 
-### 9. **What are hooks in React?**
-   Hooks are functions that let you use state and other React features in functional components. The most common hooks are `useState`, `useEffect`, and `useContext`.
 
-### 10. **What is the purpose of `useEffect`?**
-   `useEffect` is a hook that allows you to perform side effects in function components, such as data fetching, subscriptions, or manually changing the DOM. It runs after the render phase.
+### 9. What are hooks in React?
+**Explanation:** Hooks are special functions that allow you to use React features, like state and lifecycle methods, in functional components. They enable you to write more modular and reusable code.
 
-### 11. **What is context in React?**
-   Context provides a way to pass data through the component tree without having to pass props down manually at every level. It’s useful for global data like themes or user authentication.
+**Example:**
+```javascript
+import React, { useState } from 'react';
 
-### 12. **What is a higher-order component (HOC)?**
-   A higher-order component is a function that takes a component and returns a new component. HOCs are used to share common functionality or behavior among components.
+function Counter() {
+    const [count, setCount] = useState(0); // useState hook to manage state
 
-### 13. **What is React Router?**
-   React Router is a library for routing in React applications. It allows you to define multiple routes in your application and navigate between them without reloading the page.
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+}
+```
 
-### 14. **What are controlled and uncontrolled components?**
-   - **Controlled components:** Form data is handled by the component's state.
-   - **Uncontrolled components:** Form data is handled by the DOM itself.
+### 10. What is the purpose of useEffect?
+**Explanation:** `useEffect` is a hook used for managing side effects in functional components, such as fetching data, subscribing to events, or manually modifying the DOM. It runs after every render, or you can control when it runs with dependencies.
+
+**Example:**
+```javascript
+import React, { useState, useEffect } from 'react';
+
+function FetchData() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        fetch('https://api.example.com/data')
+            .then(response => response.json())
+            .then(data => setData(data));
+    }, []); // Empty array means this runs only once after the initial render
+
+    return (
+        <div>
+            {data ? <p>{data.title}</p> : <p>Loading...</p>}
+        </div>
+    );
+}
+```
+
+### 11. What is context in React?
+**Explanation:** Context provides a way to share values (like themes or user information) between components without passing props through every level of the tree. It helps manage global state.
+
+**Example:**
+```javascript
+import React, { createContext, useContext } from 'react';
+
+const ThemeContext = createContext('light'); // Default value is 'light'
+
+function ThemedButton() {
+    const theme = useContext(ThemeContext); // Use context value
+
+    return (
+        <button className={theme}>I am a {theme} themed button</button>
+    );
+}
+
+function App() {
+    return (
+        <ThemeContext.Provider value="dark">
+            <ThemedButton />
+        </ThemeContext.Provider>
+    );
+}
+```
+
+### 12. What is a higher-order component (HOC)?
+**Explanation:** A higher-order component is a function that takes a component and returns a new component. HOCs are used for code reuse, such as adding authentication or logging.
+
+**Example:**
+```javascript
+import React from 'react';
+
+function withLogging(WrappedComponent) {
+    return function(props) {
+        console.log('Rendering:', WrappedComponent.name);
+        return <WrappedComponent {...props} />;
+    };
+}
+
+function MyComponent() {
+    return <div>Hello, World!</div>;
+}
+
+const MyComponentWithLogging = withLogging(MyComponent);
+
+// Usage
+<MyComponentWithLogging />;
+```
+
+### 13. What is React Router?
+**Explanation:** React Router is a library that enables navigation among different components in a React application without refreshing the page. It allows defining multiple routes.
+
+**Example:**
+```javascript
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+function Home() {
+    return <h2>Home</h2>;
+}
+
+function About() {
+    return <h2>About</h2>;
+}
+
+function App() {
+    return (
+        <Router>
+            <nav>
+                <Link to="/">Home</Link>
+                <Link to="/about">About</Link>
+            </nav>
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+        </Router>
+    );
+}
+```
+
+### 14. What are controlled and uncontrolled components?
+**Explanation:** 
+- **Controlled Components:** Form data is controlled by React state. Every time the input changes, the state updates.
+- **Uncontrolled Components:** Form data is managed by the DOM itself. You can access data using a ref.
+
+**Controlled Example:**
+```javascript
+import React, { useState } from 'react';
+
+function ControlledInput() {
+    const [value, setValue] = useState('');
+
+    return (
+        <input
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+        />
+    );
+}
+```
+
+**Uncontrolled Example:**
+```javascript
+import React, { useRef } from 'react';
+
+function UncontrolledInput() {
+    const inputRef = useRef(null);
+
+    const handleSubmit = () => {
+        alert('A name was submitted: ' + inputRef.current.value);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text" ref={inputRef} />
+            <button type="submit">Submit</button>
+        </form>
+    );
+}
+```
 
 ### 15. **How do you optimize performance in a React app?**
    Common techniques include:
